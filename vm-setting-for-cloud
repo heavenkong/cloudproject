@@ -1,0 +1,85 @@
+Capacity setting for vm. (with VMware workstation player 14) 
+
+Memory: 2GB
+CPU: 2 
+Hard Disk: 40G 
+CD/DVD(SATA): ubuntu16.4 iso 
+Network Adapter: NAT 
+Network Adapter2: host-only 
+Network Adapter3: Bridged network 
+
+* Eanble all virtualizaiton engine 
+
+/* setting up root passwd */
+$ sudo passwd 
+$ su - 
+
+/* upgrade kernel and enter 'Y' while upgrading */
+$ apt-get upagrade 
+$ cat /etc/issue 
+$ reboot 
+
+/* install openssh-server */
+$ apt-get install openssh-server
+$ service ssh start
+$ reboot 
+
+/* resolve vm desktop resolution problem */ 
+$ apt-get install open-vm-tools-desktop
+$ reboot 
+
+/* disable firewall 
+$ ufw status verbose 
+$ ufw diable 
+
+/* check network interfaces in vm */ 
+$ ifconfig 
+ens33     Link encap:Ethernet  HWaddr 00:0c:29:a9:57:4d
+          inet addr:192.168.18.128  Bcast:192.168.18.255  Mask:255.255.255.0
+          inet6 addr: fe80::360d:7a86:ba44:d030/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1299 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:493 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:103018 (103.0 KB)  TX bytes:53930 (53.9 KB)
+          Interrupt:19 Base address:0x2000
+
+ens38     Link encap:Ethernet  HWaddr 00:0c:29:a9:57:57
+          inet addr:192.168.237.128  Bcast:192.168.237.255  Mask:255.255.255.0
+          inet6 addr: fe80::d166:ace8:91d0:4a4c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:95 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:95 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:11349 (11.3 KB)  TX bytes:13104 (13.1 KB)
+          Interrupt:16 Base address:0x2080
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:220 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:220 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:17329 (17.3 KB)  TX bytes:17329 (17.3 KB)
+ 
+$ route -n 
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.18.2    0.0.0.0         UG    100    0        0 ens33
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 ens38
+192.168.18.0    0.0.0.0         255.255.255.0   U     100    0        0 ens33
+192.168.237.0   0.0.0.0         255.255.255.0   U     100    0        0 ens38
+
+$ vi /etc/hostname
+controller 
+$ vi /etc/hosts 
+...
+192.168.237.128 controller
+... 
+$ reboot 
+$ hostname -f 
+
+
+
+
